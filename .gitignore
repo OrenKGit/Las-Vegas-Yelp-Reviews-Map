@@ -8,3 +8,4 @@ node_modules
 !.env.example
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+/Users/orenkaplan/Documents/DSC106/P3/DSC106-Project3/static/data/yelp_academic_dataset_checkin.json
