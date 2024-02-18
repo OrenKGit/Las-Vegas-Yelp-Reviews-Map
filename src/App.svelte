@@ -31,6 +31,43 @@ onMount(async () => {
 		minZoom: 5,
 		maxZoom: 25,
 	});
+
+    // adding geocoder and search bar (has to be address)
+    map.on('load', () => {
+        const geocoder = new MapboxGeocoder({
+            accessToken: mapboxgl.accessToken,
+            mapboxgl: mapboxgl, // Set the mapbox-gl instance
+            zoom: 13, // zoom level for geocoding results
+            placeholder: 'Search here', // placeholder displayed in the search bar
+            bbox: [-94.043, 28.929, -88.817, 33.019] // set bounding box to lousiana 
+        });
+        map.addControl(geocoder, 'top-left'); // add the search box to the top left
+        
+        // map flies to location when user enters location
+        const marker = new mapboxgl.Marker({ color: '#008000' }); // Create a green marker
+
+        geocoder.on('result', async (event) => {
+        // When the geocoder returns a result
+        const point = event.result.center; // Capture the result coordinates
+
+        marker.setLngLat(point).addTo(map); // Add the marker to the map at the result coordinates
+
+        // not working in console ?
+        const tileset = 'mque.90buekyy' // id for mapbox tileset (data converted to mapbox format)
+        const radius = 1609; // one mile
+        const limit = 50; // max amount of results to return
+        
+        marker.setLngLat(point).addTo(map); // Add the marker to the map at the result coordinates
+        const query = await fetch(
+            `https://api.mapbox.com/v4/${tileset}/tilequery/${point[0]},${point[1]}.json?radius=${radius}&limit=${limit}&access_token=${mapboxgl.accessToken}`,
+            { method: 'GET' }
+        );
+        const json = await query.json();
+        console.log(json);
+        });
+        });
+    
+
 });
 
 console.log(tempData)
