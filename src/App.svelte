@@ -28,7 +28,7 @@ onMount(async () => {
 		style: "mapbox://styles/mapbox/dark-v11", 
 		center: [-90.0715, 29.9511], 
 		zoom: 11, // starting zoom level
-		minZoom: 5,
+		minZoom: 10,
 		maxZoom: 18,
 	});
 
