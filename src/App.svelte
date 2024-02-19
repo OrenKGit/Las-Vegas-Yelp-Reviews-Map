@@ -25,11 +25,11 @@ onMount(async () => {
     });*/
     const map = new mapboxgl.Map({
 		container: "map",
-		style: "mapbox://styles/mapbox/light-v11", 
+		style: "mapbox://styles/mapbox/dark-v11", 
 		center: [-90.0715, 29.9511], 
 		zoom: 11, // starting zoom level
 		minZoom: 5,
-		maxZoom: 25,
+		maxZoom: 18,
 	});
 
     fetch('data/output.geojson')
@@ -56,17 +56,24 @@ onMount(async () => {
               'interpolate',
               ['linear'],
               ['get', 'review_count'],
-              0, 5,
-              d3.max(data.features, d => d.properties.review_count), 30
+              10, 2,
+              d3.max(data.features, d => d.properties.review_count)/1.25, 15
             ],
             'circle-color': [
               'interpolate',
               ['linear'],
               ['get', 'stars'],
-              1, '#ff0000',
-              5, '#66ff33'
+              1, '#EC204F',
+              5, '#2ECF03'
             ],
-            'circle-opacity': 0.8,
+            //'circle-opacity': 0.3,
+            'circle-opacity': [
+                "interpolate", ["linear"], ["zoom"],
+                // zoom is 5 (or less) -> circle radius will be 1px
+                11, 0.3,
+                // zoom is 10 (or greater) -> circle radius will be 5px
+                15, 1
+            ]
           }
         });
       })
