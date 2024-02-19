@@ -7,7 +7,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 let map;
 onMount(async () => {
 
-    const res = await fetch('data/yelp_neworleans.json'); 
+    const res = await fetch('data/output.geojson'); 
 
     const json_data = await res.json();
     
@@ -26,7 +26,7 @@ onMount(async () => {
     const map = new mapboxgl.Map({
 		container: "map",
 		style: "mapbox://styles/mapbox/dark-v11", 
-		center: [-90.0715, 29.9511], 
+		center: [-115.1391, 36.1716], 
 		zoom: 11, // starting zoom level
 		minZoom: 10,
 		maxZoom: 18,
@@ -83,7 +83,7 @@ onMount(async () => {
             mapboxgl: mapboxgl, // Set the mapbox-gl instance
             zoom: 13, // zoom level for geocoding results
             placeholder: 'Search here', // placeholder displayed in the search bar
-            bbox: [-94.043, 28.929, -88.817, 33.019] // set bounding box to lousiana 
+            bbox: [-120.005, 35.001, -114.039, 42.002] // set bounding box to lousiana 
         });
         map.addControl(geocoder, 'top-left'); // add the search box to the top left
         
