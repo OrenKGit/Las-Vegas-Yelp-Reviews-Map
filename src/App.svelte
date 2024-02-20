@@ -18,11 +18,6 @@ onMount(async () => {
     mapboxgl.accessToken =
     'pk.eyJ1IjoibXF1ZSIsImEiOiJjbHNtMm51bGcwaWhqMmlyeXZocjNhdXRiIn0.FeNJ2Al_w7at2zuWD-P_qA';
 
-    // create map
-    /*map = new mapboxgl.Map({
-        container: 'map', // container id
-        style: 'mapbox://styles/examples/cjgioozof002u2sr5k7t14dim' // map style URL from Mapbox Studio
-    });*/
     const map = new mapboxgl.Map({
 		container: "map",
 		style: "mapbox://styles/mapbox/dark-v11", 
