@@ -98,9 +98,8 @@
         }
         
         function handleCheckboxChange() {
-          selectedCuisines = []; // Clear the array
-
-          // Check each checkbox and add selected cuisines to the array
+          selectedCuisines = [];
+          
           document.querySelectorAll('.cuisine-checkbox:checked').forEach((checkbox) => {
             selectedCuisines.push(checkbox.value);
           });
@@ -282,12 +281,16 @@
       <span>Between {slider_start} and {slider_end} Stars</span>
     </div>
     <div class="overlay4">
-      <label for="Mexican" class="checkboxes">Mexican<input type="checkbox" id="Mexican" class="cuisine-checkbox" value="Mexican" /></label>
-      <label for="American" class="checkboxes">American<input type="checkbox" id="American" class="cuisine-checkbox" value="American" /></label>
-      <label for="Italian" class="checkboxes">Italian<input type="checkbox" id="Italian" class="cuisine-checkbox" value="Italian" /></label>
-      <label for="Chinese" class="checkboxes">Chinese<input type="checkbox" id="Chinese" class="cuisine-checkbox" value="Chinese" /></label>
-      <label for="Japanese" class="checkboxes">Japanese<input type="checkbox" id="Japanese" class="cuisine-checkbox" value="Japanese" /></label>
-      <label for="Korean" class ="checkboxes">Korean<input type="checkbox" id="Korean" class="cuisine-checkbox" value="Korean" /></label>
+      <label>Filter by Cuisines:</label>
+      <br><br>
+      <span>
+        <label for="Mexican" class="checkboxes">Mexican<input type="checkbox" id="Mexican" class="cuisine-checkbox" value="Mexican" /></label>
+        <label for="American" class="checkboxes">American<input type="checkbox" id="American" class="cuisine-checkbox" value="American" /></label>
+        <label for="Italian" class="checkboxes">Italian<input type="checkbox" id="Italian" class="cuisine-checkbox" value="Italian" /></label>
+        <label for="Chinese" class="checkboxes">Chinese<input type="checkbox" id="Chinese" class="cuisine-checkbox" value="Chinese" /></label>
+        <label for="Japanese" class="checkboxes">Japanese<input type="checkbox" id="Japanese" class="cuisine-checkbox" value="Japanese" /></label>
+        <label for="Korean" class ="checkboxes">Korean<input type="checkbox" id="Korean" class="cuisine-checkbox" value="Korean" /></label>
+      </span>
     </div>
     <div class="overlay2">
       <label>Legend</label>
@@ -396,13 +399,13 @@
     }
 
     .overlay4 {
-    font-size: 0.9em;
+    font-size: 0.6em;
     background-color: rgba(100, 100, 100, 0.1);
     position: absolute;
     min-width: 250px;
     width: 15%;
     top: 170px;
-    right: 10px; /* Update to move to bottom left */
+    right: 10px;
     padding: 10px;
     z-index: 3;
     font-family: sans-serif;
