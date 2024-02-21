@@ -10,6 +10,8 @@
   let data;
   let slider_stars = 3; // initial value for stars slider
   let slider_label = "";
+  let slider_start = 1;
+  let slider_end = 5;
   
   onMount(async () => {
   
@@ -40,7 +42,11 @@
           .range([5, 30]);
 
         function updateMapLayers() {
-          map.setFilter('restaurants', ['<=', ['get', 'stars'], slider_stars]);
+          map.setFilter('restaurants', [
+            'all',
+            ['>=', ['get', 'stars'], slider_start],
+            ['<=', ['get', 'stars'], slider_end],
+          ]);
         }
 
         map.addLayer({
@@ -80,7 +86,8 @@
         updateMapLayers();
         }
 
-        document.getElementById('stars').addEventListener('input', handleSliderChange);
+        document.getElementById('start').addEventListener('input', handleSliderChange);
+        document.getElementById('end').addEventListener('input', handleSliderChange);
       }); 
     
     // Create a popup, but don't add it to the map yet.
@@ -121,16 +128,25 @@
   
   <main>
     <div class="overlay">
-      <label for="stars">Filter by Stars:</label>
+      <label for="start">Filter by Stars:</label>
       <input
         type="range"
-        id="stars"
+        id="start"
         min="1"
         max="5"
         step="0.5"
-        bind:value={slider_stars}
+        bind:value={slider_start}
       />
-      <span>Below {slider_stars} Stars </span>
+      <label for="end">End:</label>
+      <input
+        type="range"
+        id="end"
+        min="1"
+        max="5"
+        step="0.5"
+        bind:value={slider_end}
+      />
+      <span>Between {slider_start} and {slider_end} Stars</span>
     </div>
   </main>
 
