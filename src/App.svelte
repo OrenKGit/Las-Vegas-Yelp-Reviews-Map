@@ -1,35 +1,35 @@
 <script>
 
-import { onMount } from 'svelte'
-let tempData = [];
-import mapboxgl from 'mapbox-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
-let map;
-onMount(async () => {
-
-    const res = await fetch('data/output.geojson'); 
-
-    const json_data = await res.json();
-    
-    tempData = json_data
-
-    console.log(tempData);
-
+  import { onMount, afterUpdate } from 'svelte'
+  let tempData = [];
+  import mapboxgl from 'mapbox-gl';
+  import 'mapbox-gl/dist/mapbox-gl.css';
+  
+  
+  let map;
+  let data;
+  let slider_stars = 3; // initial value for stars slider
+  let slider_label = "";
+  
+  onMount(async () => {
+  
     mapboxgl.accessToken =
     'pk.eyJ1IjoibXF1ZSIsImEiOiJjbHNtMm51bGcwaWhqMmlyeXZocjNhdXRiIn0.FeNJ2Al_w7at2zuWD-P_qA';
-
+    
     const map = new mapboxgl.Map({
-		container: "map",
-		style: "mapbox://styles/mapbox/dark-v11", 
-		center: [-115.1391, 36.1716], 
-		zoom: 11, // starting zoom level
-		minZoom: 10,
-		maxZoom: 18,
-	});
+      container: "map",
+      style: "mapbox://styles/mapbox/dark-v11", 
+      center: [-115.1391, 36.1716], 
+      zoom: 11, // starting zoom level
+      minZoom: 10,
+      maxZoom: 18,
+    });
 
     fetch('data/output.geojson')
       .then(response => response.json())
-      .then(data => {
+      .then(initialData => {
+        data = initialData;
+
         const colorScale = d3.scaleLinear()
           .domain([1, 5])
           .range(['#ff0000', '#66ff33']);
@@ -38,6 +38,10 @@ onMount(async () => {
         const sizeScale = d3.scaleLinear()
           .domain([0, d3.max(data.features, d => d.properties.review_count)])
           .range([5, 30]);
+
+        function updateMapLayers() {
+          map.setFilter('restaurants', ['<=', ['get', 'stars'], slider_stars]);
+        }
 
         map.addLayer({
           id: 'restaurants',
@@ -71,45 +75,105 @@ onMount(async () => {
             ]
           }
         });
-      })
+      
+        function handleSliderChange() {
+        updateMapLayers();
+        }
 
-        const geocoder = new MapboxGeocoder({
-            accessToken: mapboxgl.accessToken,
-            mapboxgl: mapboxgl, // Set the mapbox-gl instance
-            zoom: 13, // zoom level for geocoding results
-            placeholder: 'Search here', // placeholder displayed in the search bar
-            bbox: [-120.005, 35.001, -114.039, 42.002] // set bounding box to lousiana 
-        });
-        map.addControl(geocoder, 'top-left'); // add the search box to the top left
+        document.getElementById('stars').addEventListener('input', handleSliderChange);
+      }); 
+    
+    // Create a popup, but don't add it to the map yet.
+    const popup = new mapboxgl.Popup({
+      closeButton: false
+    });
+    
+    map.on('load', () => {
         
-        // map flies to location when user enters location
-        const marker = new mapboxgl.Marker({ color: '#008000' }); // Create a green marker
-
-        geocoder.on('result', async (event) => {
-        // When the geocoder returns a result
-        const point = event.result.center; // Capture the result coordinates
-
-        marker.setLngLat(point).addTo(map); // Add the marker to the map at the result coordinates
-
-        // access token and id need to be from same account
-        const tileset = 'mque.asmw1dy4' // id for mapbox tileset (data converted to mapbox format)
-        const radius = 1609; // one mile
-        const limit = 50; // max amount of results to return
+      map.on('mousemove', 'restaurants', (e) => {
+      // Change the cursor style as a UI indicator.
+      map.getCanvas().style.cursor = 'pointer';
         
-        marker.setLngLat(point).addTo(map); // Add the marker to the map at the result coordinates
-        const query = await fetch(
-            `https://api.mapbox.com/v4/${tileset}/tilequery/${point[0]},${point[1]}.json?radius=${radius}&limit=${limit}&access_token=${mapboxgl.accessToken}`,
-            { method: 'GET' }
-        );
-        const json = await query.json();
-        console.log(json);
-        });
-        });
+      // Populate the popup and set its coordinates based on the feature.
+      const feature = e.features[0];
+      popup
+        .setLngLat(feature.geometry.coordinates)
+        .setHTML(
+          `<h3>${feature.properties.name}</h1> 
+          <b>Star Rating:</b> ${feature.properties.stars} <br>
+          <b>Review Count:</b>  ${feature.properties.review_count} <br>
+          <b>Address:</b>  ${feature.properties.address}`,
+        )
+        .addTo(map);
+      });
+        
+      map.on('mouseleave', 'restaurants', () => {
+        map.getCanvas().style.cursor = '';
+        popup.remove();
+      });
+        
+    });
+      
+    });
 
-console.log(tempData)
+      
+  </script>
+  
+  <main>
+    <div class="overlay">
+      <label for="stars">Filter by Stars:</label>
+      <input
+        type="range"
+        id="stars"
+        min="1"
+        max="5"
+        step="0.5"
+        bind:value={slider_stars}
+      />
+      <span>Below {slider_stars} Stars </span>
+    </div>
+  </main>
 
-</script>
+  <style>
+    :global(body) {
+      margin: 0;
+      padding: 0;
+    }
 
+    :global(#map) {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    }
 
-<main>
-</main>
+    input {
+      display: inline-block;
+      width: 100%;
+      position: relative;
+      margin: 0;
+      cursor: pointer;
+    }
+
+    .overlay {
+      font-size: 0.9em;
+      background-color: rgba(100, 100, 100, 0.1);
+      position: absolute;
+      min-width:250px;
+      width: 15%;
+      top: 10px;
+      right: 10px;
+      padding: 10px;
+      z-index: 3;
+      font-family: sans-serif;
+      font-weight: lighter;
+      color: rgba(200, 200, 200, 1);
+    }
+
+    label {
+      font-size: 1.5em;
+      font-family: sans-serif;
+      font-weight: lighter;
+    }
+  </style>
