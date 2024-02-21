@@ -146,6 +146,112 @@
         
     });
       
+    // MARKERS WITH STUFF
+    map.on('load', () => {
+      map.addSource('places', {
+        'type': 'geojson',
+        'data': {
+        'type': 'FeatureCollection',
+        'features': [
+        {
+        // 
+        'type': 'Feature',
+        'properties': {
+        'description':
+        '<strong>Make it Mount Pleasant</strong><p><a href="http://www.mtpleasantdc.com/makeitmtpleasant" target="_blank" title="Opens in a new window">Make it Mount Pleasant</a> is a handmade and vintage market and afternoon of live entertainment and kids activities. 12:00-6:00 p.m.</p>',
+        'icon': 'theatre'
+        },
+        'geometry': {
+        'type': 'Point',
+        'coordinates': [-115.1728, 36.1147]
+        }
+        },
+        {
+        'type': 'Feature',
+        'properties': {
+        'description':
+        '<strong>Mad Men Season Five Finale Watch Party</strong><p>Head to Lounge 201 (201 Massachusetts Avenue NE) Sunday for a <a href="http://madmens5finale.eventbrite.com/" target="_blank" title="Opens in a new window">Mad Men Season Five Finale Watch Party</a>, complete with 60s costume contest, Mad Men trivia, and retro food and drink. 8:00-11:00 p.m. $10 general admission, $20 admission and two hour open bar.</p>',
+        'icon': 'bar'
+        },
+        'geometry': {
+        'type': 'Point',
+        'coordinates': [-115.1391, 36.1716]
+        }
+        },
+        {
+        'type': 'Feature',
+        'properties': {
+        'description':
+        '<strong>Big Backyard Beach Bash and Wine Fest</strong><p>EatBar (2761 Washington Boulevard Arlington VA) is throwing a <a href="http://tallulaeatbar.ticketleap.com/2012beachblanket/" target="_blank" title="Opens in a new window">Big Backyard Beach Bash and Wine Fest</a> on Saturday, serving up conch fritters, fish tacos and crab sliders, and Red Apron hot dogs. 12:00-3:00 p.m. $25.grill hot dogs.</p>',
+        'icon': 'airport'
+        },
+        'geometry': {
+        'type': 'Point',
+        'coordinates': [-115.1482, 36.0831]
+        }
+        },
+        {
+        'type': 'Feature',
+        'properties': {
+        'description':
+        '<strong>Big Backyard Beach Bash and Wine Fest</strong><p>EatBar (2761 Washington Boulevard Arlington VA) is throwing a <a href="http://tallulaeatbar.ticketleap.com/2012beachblanket/" target="_blank" title="Opens in a new window">Big Backyard Beach Bash and Wine Fest</a> on Saturday, serving up conch fritters, fish tacos and crab sliders, and Red Apron hot dogs. 12:00-3:00 p.m. $25.grill hot dogs.</p>',
+        'icon': 'restaurant'
+        },
+        'geometry': {
+        'type': 'Point',
+        'coordinates': [-115.1960, 36.1257]
+        }
+        }
+      ]
+      }
+      });
+      // Add a layer showing the places.
+      map.addLayer({
+      'id': 'places',
+      'type': 'symbol',
+      'source': 'places',
+      'layout': {
+      'icon-image': ['get', 'icon'],
+      'icon-allow-overlap': true,
+      'icon-size': 1.25
+      }
+      });
+      
+      // When a click event occurs on a feature in the places layer, open a popup at the
+      // location of the feature, with description HTML from its properties.
+      map.on('click', 'places', (e) => {
+      // Copy coordinates array.
+      const coordinates = e.features[0].geometry.coordinates.slice();
+      const description = e.features[0].properties.description;
+      
+      // Ensure that if the map is zoomed out such that multiple
+      // copies of the feature are visible, the popup appears
+      // over the copy being pointed to.
+      while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+      coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+      }
+      
+      new mapboxgl.Popup()
+      .setLngLat(coordinates)
+      .setHTML(description)
+      .addTo(map);
+      });
+      
+      // Change the cursor to a pointer when the mouse is over the places layer.
+      map.on('mouseenter', 'places', () => {
+      map.getCanvas().style.cursor = 'pointer';
+      });
+      
+      // Change it back to a pointer when it leaves.
+      map.on('mouseleave', 'places', () => {
+      map.getCanvas().style.cursor = '';
+      });
+
+      const popup = new mapboxgl.Popup({ closeOnClick: false })
+      .setLngLat([-115.1960, 36.1257])
+      .setHTML('<p>Click Me!</p>')
+      .addTo(map);
+    });
     });
 
       
@@ -176,20 +282,12 @@
       <span>Between {slider_start} and {slider_end} Stars</span>
     </div>
     <div class="overlay4">
-      <label>Cuisines</label>
-      <br>
-      <input type="checkbox" id="Mexican" class="cuisine-checkbox" value="Mexican" />
-      <label for="Mexican">Mexican</label>
-      <input type="checkbox" id="American" class="cuisine-checkbox" value="American" />
-      <label for="American">American</label>
-      <input type="checkbox" id="Italian" class="cuisine-checkbox" value="Italian" />
-      <label for="Italian">Italian</label>
-      <input type="checkbox" id="Chinese" class="cuisine-checkbox" value="Chinese" />
-      <label for="Chinese">Chinese</label>
-      <input type="checkbox" id="Japanese" class="cuisine-checkbox" value="Japanese" />
-      <label for="Japanese">Japanese</label>
-      <input type="checkbox" id="Korean" class="cuisine-checkbox" value="Korean" />
-      <label for="Korean">Korean</label>
+      <label for="Mexican" class="checkboxes">Mexican<input type="checkbox" id="Mexican" class="cuisine-checkbox" value="Mexican" /></label>
+      <label for="American" class="checkboxes">American<input type="checkbox" id="American" class="cuisine-checkbox" value="American" /></label>
+      <label for="Italian" class="checkboxes">Italian<input type="checkbox" id="Italian" class="cuisine-checkbox" value="Italian" /></label>
+      <label for="Chinese" class="checkboxes">Chinese<input type="checkbox" id="Chinese" class="cuisine-checkbox" value="Chinese" /></label>
+      <label for="Japanese" class="checkboxes">Japanese<input type="checkbox" id="Japanese" class="cuisine-checkbox" value="Japanese" /></label>
+      <label for="Korean" class ="checkboxes">Korean<input type="checkbox" id="Korean" class="cuisine-checkbox" value="Korean" /></label>
     </div>
     <div class="overlay2">
       <label>Legend</label>
@@ -334,5 +432,11 @@
       background-color: transparent;
       text-decoration: none;
     }
-
+    .checkboxes {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      vertical-align: middle;
+      word-wrap: break-word;
+    }
   </style>
