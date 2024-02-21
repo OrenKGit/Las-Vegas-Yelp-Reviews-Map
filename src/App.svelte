@@ -12,6 +12,7 @@
   let slider_label = "";
   let slider_start = 1;
   let slider_end = 5;
+  let selectedCuisines = [];
   
   onMount(async () => {
   
@@ -46,7 +47,17 @@
             'all',
             ['>=', ['get', 'stars'], slider_start],
             ['<=', ['get', 'stars'], slider_end],
-          ]);
+            selectedCuisines.length > 0
+                ? [
+                    'any',
+                    ...selectedCuisines.map((cuisine) => [
+                      'in',
+                      cuisine.toLowerCase(),
+                      ['downcase', ['get', 'categories']],
+                    ]),
+                  ]
+                : true,
+            ]);
         }
 
         map.addLayer({
@@ -81,13 +92,27 @@
             ]
           }
         });
-      
+        
         function handleSliderChange() {
         updateMapLayers();
+        }
+        
+        function handleCheckboxChange() {
+          selectedCuisines = []; // Clear the array
+
+          // Check each checkbox and add selected cuisines to the array
+          document.querySelectorAll('.cuisine-checkbox:checked').forEach((checkbox) => {
+            selectedCuisines.push(checkbox.value);
+          });
+
+          updateMapLayers();
         }
 
         document.getElementById('start').addEventListener('input', handleSliderChange);
         document.getElementById('end').addEventListener('input', handleSliderChange);
+        document.querySelectorAll('.cuisine-checkbox').forEach((checkbox) => {
+          checkbox.addEventListener('change', handleCheckboxChange);
+        });
       }); 
     
     // Create a popup, but don't add it to the map yet.
@@ -149,6 +174,22 @@
         bind:value={slider_end}
       />
       <span>Between {slider_start} and {slider_end} Stars</span>
+    </div>
+    <div class="overlay4">
+      <label>Cuisines</label>
+      <br>
+      <input type="checkbox" id="Mexican" class="cuisine-checkbox" value="Mexican" />
+      <label for="Mexican">Mexican</label>
+      <input type="checkbox" id="American" class="cuisine-checkbox" value="American" />
+      <label for="American">American</label>
+      <input type="checkbox" id="Italian" class="cuisine-checkbox" value="Italian" />
+      <label for="Italian">Italian</label>
+      <input type="checkbox" id="Chinese" class="cuisine-checkbox" value="Chinese" />
+      <label for="Chinese">Chinese</label>
+      <input type="checkbox" id="Japanese" class="cuisine-checkbox" value="Japanese" />
+      <label for="Japanese">Japanese</label>
+      <input type="checkbox" id="Korean" class="cuisine-checkbox" value="Korean" />
+      <label for="Korean">Korean</label>
     </div>
     <div class="overlay2">
       <label>Legend</label>
@@ -256,6 +297,21 @@
       max-height: 10000px;
     }
 
+    .overlay4 {
+    font-size: 0.9em;
+    background-color: rgba(100, 100, 100, 0.1);
+    position: absolute;
+    min-width: 250px;
+    width: 15%;
+    bottom: 10px;
+    left: 10px; /* Update to move to bottom left */
+    padding: 10px;
+    z-index: 3;
+    font-family: sans-serif;
+    font-weight: lighter;
+    color: rgba(200, 200, 200, 1);
+  }
+
     label {
       font-size: 1.5em;
       font-family: sans-serif;
@@ -278,4 +334,5 @@
       background-color: transparent;
       text-decoration: none;
     }
+
   </style>
