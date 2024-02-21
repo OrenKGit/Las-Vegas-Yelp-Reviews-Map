@@ -369,8 +369,8 @@
       position: absolute;
       min-width:250px;
       width: 15%;
-      top: 170px;
-      right: 10px;
+      top: 10px;
+      left: 10px;
       padding: 10px;
       z-index: 3;
       font-family: sans-serif;
@@ -384,7 +384,7 @@
       position: absolute;
       min-width:250px;
       width: 15%;
-      top: 285px;
+      top: 350px;
       right: 10px;
       padding: 10px;
       z-index: 3;
@@ -401,8 +401,8 @@
     position: absolute;
     min-width: 250px;
     width: 15%;
-    bottom: 10px;
-    left: 10px; /* Update to move to bottom left */
+    top: 170px;
+    right: 10px; /* Update to move to bottom left */
     padding: 10px;
     z-index: 3;
     font-family: sans-serif;
