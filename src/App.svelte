@@ -13,16 +13,10 @@
   
   onMount(async () => {
   
-      mapboxgl.accessToken =
-      'pk.eyJ1IjoibXF1ZSIsImEiOiJjbHNtMm51bGcwaWhqMmlyeXZocjNhdXRiIn0.FeNJ2Al_w7at2zuWD-P_qA';
-  
-      // create map
-      /*map = new mapboxgl.Map({
-          container: 'map', // container id
-          style: 'mapbox://styles/examples/cjgioozof002u2sr5k7t14dim' // map style URL from Mapbox Studio
-      });*/
-      
-      const map = new mapboxgl.Map({
+    mapboxgl.accessToken =
+    'pk.eyJ1IjoibXF1ZSIsImEiOiJjbHNtMm51bGcwaWhqMmlyeXZocjNhdXRiIn0.FeNJ2Al_w7at2zuWD-P_qA';
+    
+    const map = new mapboxgl.Map({
       container: "map",
       style: "mapbox://styles/mapbox/dark-v11", 
       center: [-115.1391, 36.1716], 
@@ -30,66 +24,97 @@
       minZoom: 10,
       maxZoom: 18,
     });
-  
-      fetch('data/output.geojson')
-        .then(response => response.json())
-        .then(initialData => {
-          data = initialData;
-  
-          const colorScale = d3.scaleLinear()
-            .domain([1, 5])
-            .range(['#ff0000', '#66ff33']);
-  
-          // Create a size scale based on review count
-          const sizeScale = d3.scaleLinear()
-            .domain([0, d3.max(data.features, d => d.properties.review_count)])
-            .range([5, 30]);
 
-          function updateMapLayers() {
-            map.setFilter('restaurants', ['<=', ['get', 'stars'], slider_stars]);
+    fetch('data/output.geojson')
+      .then(response => response.json())
+      .then(initialData => {
+        data = initialData;
+
+        const colorScale = d3.scaleLinear()
+          .domain([1, 5])
+          .range(['#ff0000', '#66ff33']);
+
+        // Create a size scale based on review count
+        const sizeScale = d3.scaleLinear()
+          .domain([0, d3.max(data.features, d => d.properties.review_count)])
+          .range([5, 30]);
+
+        function updateMapLayers() {
+          map.setFilter('restaurants', ['<=', ['get', 'stars'], slider_stars]);
+        }
+
+        map.addLayer({
+          id: 'restaurants',
+          type: 'circle',
+          source: {
+            type: 'geojson',
+            data: data,
+          },
+          paint: {
+            'circle-radius': [
+              'interpolate',
+              ['linear'],
+              ['get', 'review_count'],
+              10, 2,
+              d3.max(data.features, d => d.properties.review_count)/1.25, 15
+            ],
+            'circle-color': [
+              'interpolate',
+              ['linear'],
+              ['get', 'stars'],
+              1, '#EC204F',
+              5, '#2ECF03'
+            ],
+            //'circle-opacity': 0.3,
+            'circle-opacity': [
+                "interpolate", ["linear"], ["zoom"],
+                // zoom is 5 (or less) -> circle radius will be 1px
+                11, 0.3,
+                // zoom is 10 (or greater) -> circle radius will be 5px
+                15, 1
+            ]
           }
-  
-          map.addLayer({
-            id: 'restaurants',
-            type: 'circle',
-            source: {
-              type: 'geojson',
-              data: data,
-            },
-            paint: {
-              'circle-radius': [
-                'interpolate',
-                ['linear'],
-                ['get', 'review_count'],
-                10, 2,
-                d3.max(data.features, d => d.properties.review_count)/1.25, 15
-              ],
-              'circle-color': [
-                'interpolate',
-                ['linear'],
-                ['get', 'stars'],
-                1, '#EC204F',
-                5, '#2ECF03'
-              ],
-              //'circle-opacity': 0.3,
-              'circle-opacity': [
-                  "interpolate", ["linear"], ["zoom"],
-                  // zoom is 5 (or less) -> circle radius will be 1px
-                  11, 0.3,
-                  // zoom is 10 (or greater) -> circle radius will be 5px
-                  15, 1
-              ]
-            }
-          });
+        });
+      
+        function handleSliderChange() {
+        updateMapLayers();
+        }
+
+        document.getElementById('stars').addEventListener('input', handleSliderChange);
+      }); 
+    
+    // Create a popup, but don't add it to the map yet.
+    const popup = new mapboxgl.Popup({
+      closeButton: false
+    });
+    
+    map.on('load', () => {
         
-
-          function handleSliderChange() {
-          updateMapLayers();
-          }
-
-          document.getElementById('stars').addEventListener('input', handleSliderChange);
-        }); 
+      map.on('mousemove', 'restaurants', (e) => {
+      // Change the cursor style as a UI indicator.
+      map.getCanvas().style.cursor = 'pointer';
+        
+      // Populate the popup and set its coordinates based on the feature.
+      const feature = e.features[0];
+      popup
+        .setLngLat(feature.geometry.coordinates)
+        .setHTML(
+          `<h3>${feature.properties.name}</h1> 
+          <b>Star Rating:</b> ${feature.properties.stars} <br>
+          <b>Review Count:</b>  ${feature.properties.review_count} <br>
+          <b>Address:</b>  ${feature.properties.address}`,
+        )
+        .addTo(map);
       });
+        
+      map.on('mouseleave', 'restaurants', () => {
+        map.getCanvas().style.cursor = '';
+        popup.remove();
+      });
+        
+    });
+      
+    });
 
       
   </script>
@@ -105,7 +130,7 @@
         step="0.5"
         bind:value={slider_stars}
       />
-      <span>{slider_stars}</span>
+      <span>Below {slider_stars} Stars </span>
     </div>
   </main>
 
@@ -133,7 +158,7 @@
 
     .overlay {
       font-size: 0.9em;
-      background-color: rgba(255, 255, 255, 0.4);
+      background-color: rgba(100, 100, 100, 0.1);
       position: absolute;
       min-width:250px;
       width: 15%;
@@ -141,11 +166,14 @@
       right: 10px;
       padding: 10px;
       z-index: 3;
+      font-family: sans-serif;
+      font-weight: lighter;
+      color: rgba(200, 200, 200, 1);
     }
 
     label {
       font-size: 1.5em;
       font-family: sans-serif;
-      font-weight: bold;
+      font-weight: lighter;
     }
   </style>
