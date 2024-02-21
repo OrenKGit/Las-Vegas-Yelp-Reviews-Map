@@ -1,34 +1,9 @@
-# create-svelte
+Rationale for Design Decisions:
 
-## Generate static site using svelte SSG
+Development Process: We began by deciding on a dataset to use, going with the Yelp dataset because we believed that it provided very interesting data. We were especially interested in how it could map out restaurants, since eating out is a universal experience that can tell you a lot about recreational habits.
 
-To assist you in creating a static webpage for GitHub Pages using Svelte, we have developed a template for you: [ShaokangJiang/svelte-template (github.com)](https://github.com/ShaokangJiang/svelte-template).
+From there, we discussed how we wanted to approach the visualization. Our initial idea was to have an interactive map of Las Vegas, with a time-oriented slider similar to the lab. There would be points on the map, marking restaurants, scaled by review count and colored according to average ratings. By dragging the slider to a different point in the day, the points would appear and disappear according to if that restaurant was open at that time.
 
-Please follow the link provided, and initiate the creation of a new repository.
+However, we quickly ran into some significant issues. We struggled primarily with setting up our data and having the restaurants appear on our maps. This took up around a dozen people-hours, but we eventually resolved it. Ethan imported the necessary data to the repository, Maya formatted and filtered the dataset, and Oren converted it to the correct file type and got the restaurants to appear on the map.
 
-![image-20240210175403813](./assets/image-20240210175403813.png)
-
-After GitHub completes the cloning process, navigate to the settings page. On the left panel, under the "Pages" tab, locate the "Source" section and select "GitHub Actions" as the source. 
-
-Clone this repository and proceed with your work. Upon completion, commit and push your changes. The corresponding GitHub Actions will then execute, building a static website hosted at `https://your-username.github.io/your-repo-name` for you.
-
-![image-20240210175104365](./assets/image-20240210175104365.png)
-
-### Migrate from your project
-
-If you have started on the project and want to switch to using this template, you can copy your `src` folder, go to the local clone of your version of this template, then paste it. When it says the file exists, simply click replace, and you can continue working on your version of this template.
-
-## Setup
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building static site
-
-Just push to github. 
+We decided to scrap the initial idea of implementing a time-based slider to show what restaurants are open due to the variability in hours throughout the week, as well as difficulty in getting it to work. Instead
