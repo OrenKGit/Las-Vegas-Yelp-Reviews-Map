@@ -158,7 +158,7 @@
         'type': 'Feature',
         'properties': {
         'description':
-        '<strong>Make it Mount Pleasant</strong><p><a href="http://www.mtpleasantdc.com/makeitmtpleasant" target="_blank" title="Opens in a new window">Make it Mount Pleasant</a> is a handmade and vintage market and afternoon of live entertainment and kids activities. 12:00-6:00 p.m.</p>',
+        '<strong>The Las Vegas Strip</strong><p>The strip, which is the most famous part of Las Vegas, is obviously home to the most popular businesses, but there is a mix of well-rated and poorly-rated businesses here</p>',
         'icon': 'theatre'
         },
         'geometry': {
@@ -170,7 +170,7 @@
         'type': 'Feature',
         'properties': {
         'description':
-        '<strong>Mad Men Season Five Finale Watch Party</strong><p>Head to Lounge 201 (201 Massachusetts Avenue NE) Sunday for a <a href="http://madmens5finale.eventbrite.com/" target="_blank" title="Opens in a new window">Mad Men Season Five Finale Watch Party</a>, complete with 60s costume contest, Mad Men trivia, and retro food and drink. 8:00-11:00 p.m. $10 general admission, $20 admission and two hour open bar.</p>',
+        '<strong>Downtown</strong><p>To the north of the strip, the downtown area is home to several highly rated but relatively obscure businesses</p>',
         'icon': 'bar'
         },
         'geometry': {
@@ -182,7 +182,7 @@
         'type': 'Feature',
         'properties': {
         'description':
-        '<strong>Big Backyard Beach Bash and Wine Fest</strong><p>EatBar (2761 Washington Boulevard Arlington VA) is throwing a <a href="http://tallulaeatbar.ticketleap.com/2012beachblanket/" target="_blank" title="Opens in a new window">Big Backyard Beach Bash and Wine Fest</a> on Saturday, serving up conch fritters, fish tacos and crab sliders, and Red Apron hot dogs. 12:00-3:00 p.m. $25.grill hot dogs.</p>',
+        '<strong>Las Vegas Airport</strong><p>The airport has a large amount of very poorly rated restaurants, with very few reviews.</p>',
         'icon': 'airport'
         },
         'geometry': {
@@ -194,7 +194,7 @@
         'type': 'Feature',
         'properties': {
         'description':
-        '<strong>Big Backyard Beach Bash and Wine Fest</strong><p>EatBar (2761 Washington Boulevard Arlington VA) is throwing a <a href="http://tallulaeatbar.ticketleap.com/2012beachblanket/" target="_blank" title="Opens in a new window">Big Backyard Beach Bash and Wine Fest</a> on Saturday, serving up conch fritters, fish tacos and crab sliders, and Red Apron hot dogs. 12:00-3:00 p.m. $25.grill hot dogs.</p>',
+        '<strong>China Town</strong><p>Not far from the strip, Chinatown is home to many hidden gems, with few reviews but very high ratings</p>',
         'icon': 'restaurant'
         },
         'geometry': {
