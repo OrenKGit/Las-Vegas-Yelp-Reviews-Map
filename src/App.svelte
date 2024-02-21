@@ -164,16 +164,18 @@
       <label>Description</label>
       <br><br>
       <span>
-        
-        Data Source: <a href="https://www.yelp.com/dataset">Yelp Open Dataset</a>
+     
+        Las Vegas is not a very walkable city. Find the hottest parts of town with our map, so you'll never have to walk far to get to your next dopamine hit.
         <br>
         <br>
-        This visualization shows the distribution of businesses in Las Vegas by their popularity and rating.
+        This visualization shows the distribution of businesses in Las Vegas, with their popularity and rating.
         <br>
         Circle size shows the number of reviews a business has and circle color shows how good the reviews are.
         <br>
         Larger circles have more reviews and greener circles have better reviews.
         <br>
+        <br>
+        Data Source: <a href="https://www.yelp.com/dataset">Yelp Open Dataset</a>
         <br>
         Data has been filtered to only include the Las Vegas area
 
