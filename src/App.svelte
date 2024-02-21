@@ -176,9 +176,13 @@
         <br>
         <br>
         Data has been filtered to only include the Las Vegas area
+
       </span>
     </div>
-   
+    
+    <div>
+      <h1>HI</h1>
+    </div>
   </main>
 
   <style>
@@ -235,7 +239,7 @@
 
     .overlay3 {
       font-size: 0.9em;
-      background-color: rgba(100, 100, 100, 0.1);
+      background-color: #6464641a;
       position: absolute;
       min-width:250px;
       width: 15%;
@@ -246,6 +250,8 @@
       font-family: sans-serif;
       font-weight: lighter;
       color: rgba(200, 200, 200, 1);
+      overflow: auto;
+      max-height: 10000px;
     }
 
     label {
