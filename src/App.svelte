@@ -44,6 +44,10 @@
           const sizeScale = d3.scaleLinear()
             .domain([0, d3.max(data.features, d => d.properties.review_count)])
             .range([5, 30]);
+
+          function updateMapLayers() {
+            map.setFilter('restaurants', ['<=', ['get', 'stars'], slider_stars]);
+          }
   
           map.addLayer({
             id: 'restaurants',
@@ -77,25 +81,31 @@
               ]
             }
           });
-  
-        });    
+        
+
+          function handleSliderChange() {
+          updateMapLayers();
+          }
+
+          document.getElementById('stars').addEventListener('input', handleSliderChange);
+        }); 
       });
+
       
-    function filterRestaurants(stars) {
-      const filteredData = {
-        type: 'FeatureCollection',
-        features: data.features.filter((restaurant) => restaurant.properties.stars >= stars),
-      };
-      map.getSource('restaurants').setData(filteredData);
-      slider_label = `Stars: ${stars}`;
-    }
-  
   </script>
   
   <main>
     <div class="overlay">
-      <label for="stars">{slider_label}</label>
-      <input id="slider" type="range" min="1" max="5" step="0.5" on:input={() => filterRestaurants(slider_stars)} bind:value={slider_stars} />
+      <label for="stars">Filter by Stars:</label>
+      <input
+        type="range"
+        id="stars"
+        min="1"
+        max="5"
+        step="0.5"
+        bind:value={slider_stars}
+      />
+      <span>{slider_stars}</span>
     </div>
   </main>
 
@@ -112,7 +122,6 @@
     width: 100%;
     height: 100%;
     }
-
 
     input {
       display: inline-block;
