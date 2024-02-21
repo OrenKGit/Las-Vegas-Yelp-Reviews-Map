@@ -148,6 +148,35 @@
       />
       <span>Between {slider_start} and {slider_end} Stars</span>
     </div>
+    <div class="overlay2">
+      <label>Legend</label>
+      <br><br>
+      <span>
+        <b>Circle:</b> Business Location <br>
+        <b>Circle Size:</b> Number of Reviews <br>
+        <b>Circle Color:</b> Star Rating <br>
+
+      </span>
+    </div>
+    <div class="overlay3">
+      <label>Description</label>
+      <br><br>
+      <span>
+        
+        Data Source: <a href="https://www.yelp.com/dataset">Yelp Open Dataset</a>
+        <br>
+        <br>
+        This visualization shows the distribution of businesses in Las Vegas by their popularity and rating.
+        <br>
+        Circle size shows the number of reviews a business has and circle color shows how good the reviews are.
+        <br>
+        Larger circles have more reviews and greener circles have better reviews.
+        <br>
+        <br>
+        Data has been filtered to only include the Las Vegas area
+      </span>
+    </div>
+   
   </main>
 
   <style>
@@ -187,9 +216,50 @@
       color: rgba(200, 200, 200, 1);
     }
 
+    .overlay2 {
+      font-size: 0.9em;
+      background-color: rgba(100, 100, 100, 0.1);
+      position: absolute;
+      min-width:250px;
+      width: 15%;
+      top: 100px;
+      right: 10px;
+      padding: 10px;
+      z-index: 3;
+      font-family: sans-serif;
+      font-weight: lighter;
+      color: rgba(200, 200, 200, 1);
+    }
+
+    .overlay3 {
+      font-size: 0.9em;
+      background-color: rgba(100, 100, 100, 0.1);
+      position: absolute;
+      min-width:250px;
+      width: 15%;
+      top: 210px;
+      right: 10px;
+      padding: 10px;
+      z-index: 3;
+      font-family: sans-serif;
+      font-weight: lighter;
+      color: rgba(200, 200, 200, 1);
+    }
+
     label {
       font-size: 1.5em;
       font-family: sans-serif;
       font-weight: lighter;
+    }
+    a:link {
+      color: red;
+      background-color: transparent;
+      text-decoration: none;
+    }
+
+    a:visited {
+      color: red;
+      background-color: transparent;
+      text-decoration: none;
     }
   </style>
