@@ -129,6 +129,8 @@
   <main>
     <div class="overlay">
       <label for="start">Filter by Stars:</label>
+      <br><br>
+      <label2 for="start">Above: {slider_start}</label2>
       <input
         type="range"
         id="start"
@@ -137,7 +139,7 @@
         step="0.5"
         bind:value={slider_start}
       />
-      <label for="end">End:</label>
+      <label2 for="end">Below: {slider_end}</label2>
       <input
         type="range"
         id="end"
@@ -222,7 +224,7 @@
       position: absolute;
       min-width:250px;
       width: 15%;
-      top: 100px;
+      top: 170px;
       right: 10px;
       padding: 10px;
       z-index: 3;
@@ -237,7 +239,7 @@
       position: absolute;
       min-width:250px;
       width: 15%;
-      top: 210px;
+      top: 285px;
       right: 10px;
       padding: 10px;
       z-index: 3;
@@ -248,6 +250,12 @@
 
     label {
       font-size: 1.5em;
+      font-family: sans-serif;
+      font-weight: lighter;
+    }
+
+    .label2 {
+      font-size: 1em;
       font-family: sans-serif;
       font-weight: lighter;
     }
