@@ -212,7 +212,7 @@
       'layout': {
       'icon-image': ['get', 'icon'],
       'icon-allow-overlap': true,
-      'icon-size': 1.25
+      'icon-size': 2
       }
       });
       
@@ -281,15 +281,21 @@
       <span>Between {slider_start} and {slider_end} Stars</span>
     </div>
     <div class="overlay4">
-      <label>Filter by Cuisines:</label>
+      <label class = "cuisine-label">Filter by Cuisines:</label>
       <br><br>
-      <span>
-        <label for="Mexican" class="checkboxes">Mexican<input type="checkbox" id="Mexican" class="cuisine-checkbox" value="Mexican" /></label>
-        <label for="American" class="checkboxes">American<input type="checkbox" id="American" class="cuisine-checkbox" value="American" /></label>
-        <label for="Italian" class="checkboxes">Italian<input type="checkbox" id="Italian" class="cuisine-checkbox" value="Italian" /></label>
-        <label for="Chinese" class="checkboxes">Chinese<input type="checkbox" id="Chinese" class="cuisine-checkbox" value="Chinese" /></label>
-        <label for="Japanese" class="checkboxes">Japanese<input type="checkbox" id="Japanese" class="cuisine-checkbox" value="Japanese" /></label>
-        <label for="Korean" class ="checkboxes">Korean<input type="checkbox" id="Korean" class="cuisine-checkbox" value="Korean" /></label>
+      <span class="checkbox-container">
+        <label for="Mexican" class="checkboxes">Mexican<input type="checkbox" id="Mexican" class="cuisine-checkbox" value="Mexican" />
+          <span class="checkbox-label">Mexican</span></label>
+        <label for="American" class="checkboxes">American<input type="checkbox" id="American" class="cuisine-checkbox" value="American" />
+          <span class="checkbox-label">American</span></label>
+        <label for="Italian" class="checkboxes">Italian<input type="checkbox" id="Italian" class="cuisine-checkbox" value="Italian" />
+          <span class="checkbox-label">Italian</span></label>
+        <label for="Chinese" class="checkboxes">Chinese<input type="checkbox" id="Chinese" class="cuisine-checkbox" value="Chinese" />
+          <span class="checkbox-label">Chinese</span></label>
+        <label for="Japanese" class="checkboxes">Japanese<input type="checkbox" id="Japanese" class="cuisine-checkbox" value="Japanese" />
+          <span class="checkbox-label">Japanese</span></label>
+        <label for="Korean" class ="checkboxes">Korean<input type="checkbox" id="Korean" class="cuisine-checkbox" value="Korean" />
+          <span class="checkbox-label">Korean</span></label>
       </span>
     </div>
     <div class="overlay2">
@@ -421,7 +427,7 @@ In general, we spent about twenty people hours on developing this visualization.
       position: absolute;
       min-width:250px;
       width: 15%;
-      top: 350px;
+      top: 370px;
       right: 10px;
       padding: 10px;
       z-index: 3;
@@ -439,13 +445,17 @@ In general, we spent about twenty people hours on developing this visualization.
     position: absolute;
     min-width: 250px;
     width: 15%;
-    top: 170px;
+    top: 160px;
     right: 10px;
     padding: 10px;
     z-index: 3;
     font-family: sans-serif;
     font-weight: lighter;
     color: rgba(200, 200, 200, 1);
+  }
+
+  .cuisine-label {
+    font-size: 2.1em
   }
 
     label {
@@ -472,9 +482,18 @@ In general, we spent about twenty people hours on developing this visualization.
     }
     .checkboxes {
       display: flex;
-      justify-content: center;
       align-items: center;
-      vertical-align: middle;
-      word-wrap: break-word;
+      margin-bottom:5px;
     }
+    .checkbox-container {
+      display: grid;
+      grid-template-columns: auto;
+      gap: 5px;
+    }
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      visibility:hidden;
+    }
+
   </style>
