@@ -316,6 +316,7 @@
         <br>
         Data Source: <a href="https://www.yelp.com/dataset">Yelp Open Dataset</a>
         <br>
+        <br>
         Data has been filtered to only include the Las Vegas area
         
       </span>
