@@ -212,7 +212,7 @@
       'layout': {
       'icon-image': ['get', 'icon'],
       'icon-allow-overlap': true,
-      'icon-size': 2.1
+      'icon-size': 2
       }
       });
       
