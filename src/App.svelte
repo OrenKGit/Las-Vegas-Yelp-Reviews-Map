@@ -212,7 +212,7 @@
       'layout': {
       'icon-image': ['get', 'icon'],
       'icon-allow-overlap': true,
-      'icon-size': 2
+      'icon-size': 2.2
       }
       });
       
@@ -247,7 +247,7 @@
       });
 
       const popup = new mapboxgl.Popup({ closeOnClick: false })
-      .setLngLat([-115.1960, 36.1257])
+      .setLngLat([-115.1960, 36.1310])
       .setHTML('<p>Click Me!</p>')
       .addTo(map);
     });
@@ -428,7 +428,7 @@ Everyone worked on the debugging, but Oren focused on the implementation of enco
       position: absolute;
       min-width:250px;
       width: 15%;
-      top: 370px;
+      top: 380px;
       right: 10px;
       padding: 10px;
       z-index: 3;
@@ -446,7 +446,7 @@ Everyone worked on the debugging, but Oren focused on the implementation of enco
     position: absolute;
     min-width: 250px;
     width: 15%;
-    top: 160px;
+    top: 165px;
     right: 10px;
     padding: 10px;
     z-index: 3;
@@ -456,7 +456,7 @@ Everyone worked on the debugging, but Oren focused on the implementation of enco
   }
 
   .cuisine-label {
-    font-size: 2.1em
+    font-size: 2.2em
   }
 
     label {
