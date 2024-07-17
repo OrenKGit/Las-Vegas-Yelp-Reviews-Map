@@ -257,7 +257,7 @@
   </script>
   
   <main>
-    <h1 style="position: absolute; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1000; color: white;">The <span style="color: #ff4500;">Hottest</span>  Parts of Sin City</h1>  
+    <h1 style="position: absolute; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1000; color: white;">Las Vegas<span style="color: #ff4500;">Hot Spots</span></h1>  
     <h3 style="position: absolute; top: 60px; left: 50%; transform: translateX(-50%); z-index: 1000; color: white;"> <span style="color: #ff4500;"></span> Yelp Review Map </h3>  
     <div class="overlay">
       <label for="start">Filter by Stars:</label>
