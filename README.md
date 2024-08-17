@@ -1,3 +1,7 @@
+# Map of Las Vegas Restaurants with Yelp Ratings
+
+**[View page here](https://orenkgit.github.io/Las-Vegas-Yelp-Reviews-Map/)**
+
 **Rationale for Design Decisions**:
 
 We decided to take the approach of making a map to help tourists find popular businesses and areas. The choices we made serve this purpose. We chose to make a map of Las Vegas as opposed to other cities since it is a major renowned resort city that is known for its dining, entertainment, and nightlife and would have many interesting businesses we can examine on a map. 
